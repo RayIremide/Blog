@@ -2,6 +2,7 @@ const express = require('express')
 const mongoDB = require('./Database/connectDB')
 require('dotenv').config();
 const morgan = require('morgan');
+const path =require('path')
 
 const viewRouter= require('./Views/viewRouter')
 
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true })); 
 
 app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'Views'));
 
 app.use('/blog', viewRouter)
 
