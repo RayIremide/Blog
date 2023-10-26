@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background-color: purple;
+      color: white;
+      padding: 15px; /* Adjust the padding to lower the header */
+    }
+
+    main {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      color: purple;
+    }
+
+    
+    form {
+            width: 80%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+    label {
+      margin: 10px 0;
+      font-size: medium;
+      font-weight: bold;
+      color: purple;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button[type="submit"] {
+      background-color: purple;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #6B007C;
+    }
+
+    textarea {
+      width: 100%; /* Adjust the width to fit the form container */
+      height: 300px; /* Reduce the height of the textarea */
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <%- include('./partials/header'); %>
+  </div>
+    <main>
+
+  <form  action="/blog/update/<%= blog.blog_id %>" method="POST">
+    <h2>Edit Blog</h2>
+
+    <label for="title">Post Title:</label>
+    <input type="text" id="title" name="title" value="<%= blog.title %>">
+    <br>
+
+    <label for="description">Description:</label>
+      <input type="description" id="description" name="description" value="<%=blog.description%>">
+    <br>
+
+    <label for="content">Post Content:</label>
+    <textarea id="content" name="content" rows="6"><%= blog.body %></textarea>
+    <br>
+
+    <label for="tag">Tags:</label>
+    <input type="tag" id="tag" name="tag" value="<%=blog.tag%>">
+    <br>
+ 
+    <div>
+
+      <button id="btn" type="submit" value="publish">Publish</button>
+        
+    
+    </div>
+  </form>
+  </main>
+</body>
+</html>
+
+

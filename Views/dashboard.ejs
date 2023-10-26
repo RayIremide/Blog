@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5; /* Background color for the main content */
+      display: flex;
+      flex-direction: column; /* Set the flex direction to column */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Style for the header */
+    .header {
+      background-color: purple;
+      color: white;
+      padding: 10px;
+    }
+
+    ul {
+      list-style: none;
+      color: black;
+      padding: 0;
+    }
+
+    li {
+      margin: 10px;
+    }
+
+    /* Style for the "Edit" button */
+    #edit-btn {
+      background-color:purple; /* Blue background color */
+      color: white; /* Text color */
+      border: none; /* No border */
+      padding: 10px 20px; /* Padding around the text */
+      border-radius: 5px; /* Rounded corners */
+      cursor: pointer; /* Cursor style on hover */
+    }
+
+    #edit-btn:hover {
+      background-color: purple; /* Darker blue on hover */
+    }
+
+    #btn {
+      background-color:red; /* Blue background color */
+      color: white; /* Text color */
+      border: none; /* No border */
+      padding: 10px 20px; /* Padding around the text */
+      border-radius: 5px; /* Rounded corners */
+      cursor: pointer; /* Cursor style on hover */
+    }
+
+    #btn:hover {
+      background-color: red; 
+    }
+    .button-container {
+            text-align: right; /* Align the buttons to the right */
+            margin-top: 20px; 
+        }
+
+        /* Style for the buttons */
+        .view-button {
+            background-color:purple; /* Customize button style as needed */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius:5px;
+            margin-left: 20px;
+            font-weight:bolder
+        }
+
+        .centered-text {
+            text-align: center;
+        }
+        .larger-text {
+            font-size: 24px;
+        }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <%- include('./partials/header'); %>
+  </div>
+
+  <main>
+    <h1 class="centered-text larger-text">Welcome to your Dashboard</h1>
+
+    <h2 class="centered-text larger-text">Here is a list of your Blog Posts</h2>
+
+    <div class="button-container">
+      <a href="createBlog" class="createBlog">
+        <button class="view-button">Create a new Blog Post</button></a>
+        <a href="draft">
+          <button class="view-button" >View Draft Posts</button>
+        </a>
+      <a href="published">
+        <button class="view-button">View Published Posts</button>
+      </a>
+      
+  </div>
+
+    <ul>
+        <% if (userBlogs && userBlogs.length > 0) { %>
+            <% userBlogs.forEach(blog => { %>
+                <li style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+                    <h3><%= blog.title %></h3>
+                    <p>Description: <%= blog.description %></p>
+                    <p>
+                        <!-- Display only a portion of the blog content -->
+                        <%= blog.body.substring(0, 600) %>
+                        <!-- Add a "Read More" link that links to the full content -->
+                        <% if (blog.body.length > 150) { %>
+                            <a href="/blog/blog/<%= blog.blog_id %>" style="color: purple;">Read More</a>
+
+                        <% } %>
+                    </p>
+                    <p>Tags: <%= blog.tag %></p>
+                    <p><strong>Author: <%= blog.author.first_name %> <%= blog.author.last_name %></strong></p>
+
+                    <p>State: <%= blog.state %></p>
+                    <p>Timestamp: <%= blog.createdDate %></p>
+
+
+                    <a href="/blog/edit/<%= blog.blog_id %>" style="text-decoration: none;">
+                      <button id="edit-btn">Edit</button>
+                    </a>
+                    
+                    <form action="/blog/delete/<%= blog.blog_id %>" method="POST" style="display: inline;">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button id="btn" type="submit" value="delete">Delete</button>
+                    </form>
+                    
+                </li>
+            <% }); %>
+        <% } else { %>
+            <p>You haven't created any blog posts yet.</p>
+        <% } %>
+    </ul>
+
+    
+  </main>
+</body>
+</html>
